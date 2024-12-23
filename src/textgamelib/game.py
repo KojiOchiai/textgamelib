@@ -66,3 +66,55 @@ class Game:
             self.player.current_room = next_room_id
             return True
         return False
+
+
+
+if __name__ == "__main__":
+    # Create a few rooms
+    room1 = Room(id="room1", name="Entrance Hall", description="A large hall with a grand staircase.")
+    room2 = Room(id="room2", name="Library", description="A quiet room filled with books.")
+    room3 = Room(id="room3", name="Kitchen", description="A room with a large dining table and a fireplace.")
+
+    # Set exits for the rooms
+    room1.exits = {"north": "room2"}
+    room2.exits = {"south": "room1", "east": "room3"}
+    room3.exits = {"west": "room2"}
+
+    # Create a game object
+    key = GameObject(name="key", description="A small rusty key.")
+
+    # Initialize the game
+    game = Game()
+
+    # Add rooms to the game
+    game.add_room(room1)
+    game.add_room(room2)
+    game.add_room(room3)
+
+    # Add object to the game
+    game.add_object(key)
+
+    # Start the game with a player
+    game.start_game(player_name="Hero", starting_room_id="room1")
+
+    # Test moving the player and show room descriptions
+    current_room = game.get_current_room()
+    print(f"Current Room: {current_room.name} - {current_room.description}")
+    
+    if game.move_player("north"):
+        current_room = game.get_current_room()
+        print(f"Moved north to: {current_room.name} - {current_room.description}")
+    else:
+        print("Cannot move north.")
+
+    if game.move_player("east"):
+        current_room = game.get_current_room()
+        print(f"Moved east to: {current_room.name} - {current_room.description}")
+    else:
+        print("Cannot move east.")
+
+    if game.move_player("west"):
+        current_room = game.get_current_room()
+        print(f"Moved west to: {current_room.name} - {current_room.description}")
+    else:
+        print("Cannot move west.")
